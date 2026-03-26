@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall
-RAYLIB_INC = -I"D:/raylib/raylib-5.5_win64_mingw-w64/include"
+RAYLIB_INC = -I"D:/raylib/raylib-5.5_win64_mingw-w64/include" -I./include
 RAYLIB_LIB = -L"D:/raylib/raylib-5.5_win64_mingw-w64/lib" -lraylib -lopengl32 -lgdi32 -lwinmm
 
 SRC_DIR = src
