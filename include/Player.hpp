@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 
 #include <raylib.h>
+#include "Bullet.hpp"
 
 
 class Player{
@@ -9,6 +10,8 @@ class Player{
     Player();
     void update();  //called every frame to update movement
     void draw();   //called every frame to draw the player
+    Bullet shoot() const;
+    float getVelocityX() const { return velocityX; }
 
     private:
     Vector2 position;   //player position(x,y)

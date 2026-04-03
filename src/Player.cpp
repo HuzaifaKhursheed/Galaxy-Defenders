@@ -41,3 +41,10 @@ void Player::draw()
 {
     DrawRectangle(position.x - WIDTH/2, position.y - WIDTH/2, WIDTH, WIDTH, BLUE);
 }
+
+Bullet Player::shoot() const
+{
+    float bulletX = position.x;
+    float bulletY = position.y - WIDTH/2;
+    return Bullet(bulletX, bulletY, true);
+}
