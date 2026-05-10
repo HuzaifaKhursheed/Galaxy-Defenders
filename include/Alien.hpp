@@ -10,13 +10,14 @@ public:
 
     virtual void update() = 0;
     virtual void draw() = 0;
-    virtual void takeDamage();
+    virtual void takeDamage(int dmg);
 
     bool isAlive() const { return health > 0; }
     float getX() const { return position.x; }
     float getY() const { return position.y; }
     void setPosition(float x, float y) { position = {x, y}; }
-    Rectangle getBounds() const { return { position.x - WIDTH/2, position.y - WIDTH/2, WIDTH, WIDTH }; }
+    virtual Rectangle getBounds() const { return { position.x - 20, position.y - 20, 40, 40 }; }
+    int getHealth() const { return health; }
 
 protected:
     Vector2 position;

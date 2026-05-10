@@ -3,7 +3,7 @@
 
 BigAlien::BigAlien(float x, float y) : Alien(x, y)
 {
-    health = 3;   // three hits to kill
+    health = 35;
 }
 
 void BigAlien::update()
@@ -13,5 +13,8 @@ void BigAlien::update()
 
 void BigAlien::draw()
 {
-    DrawRectangle(position.x - WIDTH/2, position.y - WIDTH/2, WIDTH, WIDTH, RED);
+    float drawSize = WIDTH - 2;
+    DrawRectangle(position.x - drawSize/2, position.y - drawSize/2, drawSize, drawSize, RED);
+    float barWidth = drawSize * ((float)health / 35.0f);
+    DrawRectangle(position.x - drawSize/2, position.y - drawSize/2 - 8, barWidth, 4, RED);
 }

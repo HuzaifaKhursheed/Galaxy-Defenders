@@ -4,23 +4,28 @@
 #include <raylib.h>
 #include "Bullet.hpp"
 
-
-class Player{
-    public:
+class Player {
+public:
     Player();
-    void update();  //called every frame to update movement
-    void draw();   //called every frame to draw the player
+    void update();
+    void draw();
     Bullet shoot() const;
-    float getVelocityX() const { return velocityX; }
+    void takeDamage(int damage);
+    int getHealth() const { return health; }
+    int getMaxHealth() const { return maxHealth; }
+    void setHealth(int h);
+    Rectangle getBounds() const;
+    void setPosition(float x, float y);
 
-    private:
-    Vector2 position;   //player position(x,y)
-    float velocityX;   // horizontal speed,+ve means right,-ve means left
+private:
+    Vector2 position;
+    float velocityX;
+    int health;
+    int maxHealth;
     static constexpr float WIDTH = 40.0f;
     static constexpr float ACC = 0.5f;
     static constexpr float DRAG = 0.95f;
     static constexpr float MAX_SPEED = 5.0f;
-
 };
 
 #endif

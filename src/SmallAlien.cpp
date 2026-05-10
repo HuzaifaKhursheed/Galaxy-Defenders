@@ -3,16 +3,20 @@
 
 SmallAlien::SmallAlien(float x, float y) : Alien(x, y)
 {
-    health = 1;   // one hit kill
+    health = 13;
 }
 
 void SmallAlien::update()
 {
-    // simple horizontal movement (group direction will be handled by the manager)
     position.x += speedX;
 }
 
 void SmallAlien::draw()
 {
-    DrawRectangle(position.x - WIDTH/2, position.y - WIDTH/2, WIDTH, WIDTH, GREEN);
+    
+float drawSize = WIDTH - 2; // 38
+DrawRectangle(position.x - drawSize/2, position.y - drawSize/2, drawSize, drawSize, GREEN);
+float barWidth = drawSize * ((float)health / 13.0f);
+DrawRectangle(position.x - drawSize/2, position.y - drawSize/2 - 8, barWidth, 4, RED);
+
 }
