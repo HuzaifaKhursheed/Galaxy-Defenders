@@ -1,36 +1,31 @@
 #include "Player.hpp"
+#include "ResourceManager.hpp"
 
 Player::Player()
 {
-    velocityX = 0.0f; //initially at rest
-    position = { 400.0f, 550.0f };  //starting position,400 is half of window width so centered,550 is 50 pixels above the bottom(600)
+    velocityX = 0.0f;
+    position = { 400.0f, 550.0f };
+    maxHealth = 70;
+    health = maxHealth;
 }
 
 void Player::update()
 {
-    //Check for key presses and change velocity
     if (IsKeyDown(KEY_LEFT))
-        velocityX = velocityX - ACC;
+        velocityX -= ACC;
     if (IsKeyDown(KEY_RIGHT))
-        velocityX = velocityX + ACC;
+        velocityX += ACC;
 
-    //Apply friction (slow down gradually)
-    velocityX = velocityX * DRAG;
-
-    //If speed is very small, set it to zero to avoid drifting
+    velocityX *= DRAG;
     if (velocityX < 0.05f && velocityX > -0.05f)
         velocityX = 0.0f;
 
-    //Limiting maximum speed
     if (velocityX > MAX_SPEED)
         velocityX = MAX_SPEED;
     if (velocityX < -MAX_SPEED)
         velocityX = -MAX_SPEED;
 
-    //Move the player by adding velocity to position
-    position.x = position.x + velocityX;
-
-    //To Keep the player inside the window edges
+    position.x += velocityX;
     if (position.x < WIDTH/2)
         position.x = WIDTH/2;
     if (position.x > 800 - WIDTH/2)
@@ -39,12 +34,39 @@ void Player::update()
 
 void Player::draw()
 {
-    DrawRectangle(position.x - WIDTH/2, position.y - WIDTH/2, WIDTH, WIDTH, BLUE);
+    Texture2D tex = ResourceManager::getTexture("player");
+    Rectangle sourceRec = { 0.0f, 0.0f, (float)tex.width, (float)tex.height };
+    Rectangle destRec = { position.x, position.y, WIDTH, WIDTH };
+    Vector2 origin = { WIDTH / 2.0f, WIDTH / 2.0f };
+    DrawTexturePro(tex, sourceRec, destRec, origin, 0.0f, WHITE);
 }
 
 Bullet Player::shoot() const
 {
     float bulletX = position.x;
     float bulletY = position.y - WIDTH/2;
-    return Bullet(bulletX, bulletY, true);
+    return Bullet(bulletX, bulletY, velocityX, true, 1);
+}
+
+void Player::takeDamage(int damage)
+{
+    health -= damage;
+    if (health < 0) health = 0;
+}
+
+Rectangle Player::getBounds() const
+{
+    return { position.x - WIDTH/2, position.y - WIDTH/2, WIDTH, WIDTH };
+}
+
+void Player::setPosition(float x, float y)
+{
+    position = {x, y};
+}
+
+void Player::setHealth(int h)
+{
+    health = h;
+    if (health > maxHealth) health = maxHealth;
+    if (health < 0) health = 0;
 }
